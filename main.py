@@ -11,10 +11,13 @@
 #       - on pin 3, and connected to ground
 #
 #   an HBridge (eg L293D)
-#       - wire the enable to 3.3V with a 10k resister
-#       - The PWM input on the chip is wired to pin 2 of the trinket
-#       - H-Bridge output of course goes to the positive lead of the LED/motor/etc..
+#       - wire Vcc1 and Vcc2 both to 5V USB
+#       - wire the enable to 3.3V with a 10k resister (on the L293D this is 1,2 EN)
+#       - The PWM input (on the L293D this is 1A) on the chip is wired to pin 2 of the trinket
+#       - H-Bridge output (on the L293D this is 1Y) goes to the positive lead of the LED/motor/etc..
+#       - Ground to Ground.. connect all the grounds for heat sinking
 # 
+#   Ensure the LED or motor has the correct current limiting resistance
 # 
 # Lamp (or motor, or whatever...) can be toggled via either a button on D3
 # Or by updating the modified time on either /signalon.txt or /signaloff.txt 
