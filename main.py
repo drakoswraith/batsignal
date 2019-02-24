@@ -55,8 +55,9 @@ def getOffMTime():
             return os.stat(f)[8]     
     return 0  
 
-
-supervisor.disable_autoreload()
+# we need to disable auto-reload of the scripts to avoid the script
+# restarting and losing our state when signalon.txt and signaloff.txt are modified
+supervisor.disable_autoreload() 
 
 dot = dotstar.DotStar(board.APA102_SCK, board.APA102_MOSI, 1, brightness=0.05)
 
@@ -95,7 +96,7 @@ while True:
 
     if signalState:
         dot[0] = [0, 50, 100]
-        pwmLamp.duty_cycle = 65535
+        pwmLamp.duty_cycle = 65535      #Lower this value to reduce brightness/current draw
     else:
         dot[0] = [0, 0, 0]
         pwmLamp.duty_cycle = 0
