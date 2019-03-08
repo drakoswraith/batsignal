@@ -5,6 +5,12 @@
 # Released under the MIT license. 
 # https://github.com/drakoswraith/batsignal
 #---------------------------------------------------------------------------------------------
+# Usage
+# 1. Build the circuit...
+# 2. Copy main.py to the Trinket M0
+# 3. Copy signalon.txt and signaloff.txt to the Trinket M0
+# 4. Save to the on/off files to control the light
+#
 # Basic circuit consists of:
 #   a momentary push button
 #       - pulled high
