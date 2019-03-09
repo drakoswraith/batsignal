@@ -80,6 +80,7 @@ $MenuItemFlagFile = New-Object System.Windows.Forms.MenuItem
 $MenuItemSeperator1 = New-Object System.Windows.Forms.MenuItem
 $MenuItemSeperator2 = New-Object System.Windows.Forms.MenuItem
 $TimerCheckFile = New-Object System.Windows.Forms.Timer
+$TimerCheckDrive = New-Object System.Windows.Forms.Timer
 #$icon = New-Object System.Drawing.Icon("D:\tmp\myicon.ico")
 #$NotifyIcon.Icon =  $icon
 
@@ -118,13 +119,14 @@ function doCheck() {
     # check if USB device is plugged in
     # set batsignal on if flag file was found and usb drive is available
     # user must manually turn light off once turned on
-
-    $flagFileFound = test-path $flagFile
-    if($flagFileFound) { remove-item $flagFile }
-    if($flagFileFound) {
-        $message = "Notification to enable Bat Signal Received!"
-        $NotifyIcon.ShowBalloonTip(5000,"Bat Signal On!",$message,[system.windows.forms.ToolTipIcon]"Info")
-        signalOn
+    if(findTrinket) {
+        $flagFileFound = test-path $flagFile
+        if($flagFileFound) { remove-item $flagFile }
+        if($flagFileFound) {
+            $message = "Notification to enable Bat Signal Received!"
+            $NotifyIcon.ShowBalloonTip(5000,"Bat Signal On!",$message,[system.windows.forms.ToolTipIcon]"Info")
+            signalOn
+        }
     }
 }
 
@@ -214,6 +216,23 @@ function setFlagFilePath(){
         Set-ItemProperty -Path "HKCU:\Software\DrakosWraith\BatSignal" -Name "FlagFile" -Value $flagFile
     }
 }
+
+function checkDrive() {
+    if(findTrinket) {
+        $MenuItemSigOn.enabled = $True
+        $MenuItemSigOff.enabled = $True
+        $NotifyIcon.Icon = "$scriptdir\lightbulb.ico"
+    } else {
+        $MenuItemSigOn.enabled = $False
+        $MenuItemSigOff.enabled = $False
+        $NotifyIcon.Icon = "$scriptdir\lightbulb_err.ico"
+    }
+}
+
+$TimerCheckDrive.Interval = 5000
+$TimerCheckDrive.add_Tick({checkDrive})
+$TimerCheckDrive.start()
+
 
 $TimerCheckFile.Interval = 30000 # (30sec)
 $TimerCheckFile.add_Tick({doCheck})
