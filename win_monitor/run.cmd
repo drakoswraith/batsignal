@@ -1,0 +1,1 @@
+PowerShell.exe .\batsignal_monitor.ps1
