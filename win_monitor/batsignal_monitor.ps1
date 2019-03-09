@@ -38,16 +38,16 @@ $StartUp="$Env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
 $scriptdir = $PSCommandPath.Substring(0, $PSCommandPath.LastIndexOf("\") + 1)
 
 function remStartup() {
-    $delTask = 'schtasks /delete /tn "Batsignal_Monitor"'
+    $delTask = 'schtasks /delete /f /tn "Batsignal_Monitor"'
     Start-Process -FilePath powershell.exe -ArgumentList $delTask -verb RunAs -WorkingDirectory C:
     #Start-Process -FilePath powershell.exe -ArgumentList $delTask -verb RunAs -WorkingDirectory C:
     #if(test-path "$StartUp\\BatSignalMonitor.lnk") { remove-item "$StartUp\\BatSignalMonitor.lnk" }
 }
 
 function addStartup() {
-    remStartup
+    $delTask = 'schtasks /delete /f /tn "Batsignal_Monitor"'
     $c = "'powershell.exe -windowstyle hidden -file `"" + $PSCommandPath + "`"'"
-    $createTask = 'schtasks /create /tn "Batsignal_Monitor" /sc onlogon /delay 0000:30 /tr ' + $c + '; pause'
+    $createTask = $delTask + '; schtasks /create /tn "Batsignal_Monitor" /sc onlogon /delay 0000:30 /tr ' + $c + '; pause'
     Start-Process -FilePath powershell.exe -ArgumentList $createTask -verb RunAs -WorkingDirectory C:
     #$code = 'New-Item -ItemType SymbolicLink -Path "' + "`'" + $StartUp  + "`'" + '" -Name "BatSignalMonitor.lnk" -Value "' + "`'" + $runfile + "`'" + '"; pause'
     #Start-Process -FilePath powershell.exe -ArgumentList $code -verb RunAs -WorkingDirectory C:
@@ -173,7 +173,7 @@ function togglePause(){
 function setFlagFilePath(){
     $form = New-Object System.Windows.Forms.Form
     $form.Text = 'Enter Path to Flag File'
-    $form.Size = New-Object System.Drawing.Size(300,200)
+    $form.Size = New-Object System.Drawing.Size(400,200)
     $form.StartPosition = 'CenterScreen'
 
     $OKButton = New-Object System.Windows.Forms.Button
@@ -194,13 +194,13 @@ function setFlagFilePath(){
 
     $label = New-Object System.Windows.Forms.Label
     $label.Location = New-Object System.Drawing.Point(10,20)
-    $label.Size = New-Object System.Drawing.Size(280,20)
+    $label.Size = New-Object System.Drawing.Size(350,20)
     $label.Text = 'Please enter file to watch for to trigger the signal automatically:'
     $form.Controls.Add($label)
 
     $textBox = New-Object System.Windows.Forms.TextBox
     $textBox.Location = New-Object System.Drawing.Point(10,40)
-    $textBox.Size = New-Object System.Drawing.Size(260,20)
+    $textBox.Size = New-Object System.Drawing.Size(340,20)
     $form.Controls.Add($textBox)
 
     $form.Topmost = $true
