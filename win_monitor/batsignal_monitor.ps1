@@ -234,7 +234,7 @@ $TimerCheckDrive.add_Tick({checkDrive})
 $TimerCheckDrive.start()
 
 
-$TimerCheckFile.Interval = 30000 # (30sec)
+$TimerCheckFile.Interval = 10000 # (10sec)
 $TimerCheckFile.add_Tick({doCheck})
 $TimerCheckFile.start()
 
