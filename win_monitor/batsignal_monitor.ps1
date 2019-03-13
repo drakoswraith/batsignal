@@ -86,10 +86,10 @@ $TimerCheckDrive = New-Object System.Windows.Forms.Timer
 
 
 if((test-path 'HKCU:\Software\DrakosWraith') -eq $false) {
-    New-Item –Path 'HKCU:\Software' –Name 'DrakosWraith'
+    New-Item -Path 'HKCU:\Software' -Name 'DrakosWraith'
 }
 if((test-path 'HKCU:\Software\DrakosWraith\BatSignal') -eq $false) {
-    New-Item –Path 'HKCU:\Software\DrakosWraith' –Name 'BatSignal'
+    New-Item -Path 'HKCU:\Software\DrakosWraith' -Name 'BatSignal'
 }
 
 $flagFile = ""
